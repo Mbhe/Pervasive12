@@ -20,7 +20,7 @@ public class iBeaconActivity extends AppCompatActivity {
     private BluetoothAdapter mBluetoothAdapter;
     //private LeDeviceListAdapter mLeDeviceListAdapter;
     private boolean mScanning;
-    private Handler mHandler;
+    private Handler mHandler = new Handler();
 
     private TextView devices;
 
@@ -50,16 +50,17 @@ public class iBeaconActivity extends AppCompatActivity {
     private void scanLeDevice(final boolean enable) {
         if (enable) {
             // Stops scanning after a pre-defined scan period.
-            /*mHandler.postDelayed(new Runnable() {
+            mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     mScanning = false;
                     mBluetoothAdapter.stopLeScan(mLeScanCallback);
+                    devices.append("We have stopped" + "\n");
                 }
-            }, SCAN_PERIOD);*/
+            }, SCAN_PERIOD);
 
             mScanning = true;
-            devices.append("We are starting!");
+            devices.append("We are starting!" + "\n");
             mBluetoothAdapter.startLeScan(mLeScanCallback);
         } else {
             mScanning = false;
@@ -78,7 +79,7 @@ public class iBeaconActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            devices.append(device.toString());
+                            devices.append(device.toString() + "\n");
                         }
                     });
                 }
